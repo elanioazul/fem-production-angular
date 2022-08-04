@@ -10,4 +10,7 @@ export class AppComponent {
     { path: '/', icon: 'home', title: 'home' },
     { path: '/widgets', icon: 'view_list', title: 'widgets' },
   ];
+
+  toggleSideNav() {}
+  logout() {}
 }
