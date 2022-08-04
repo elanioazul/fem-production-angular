@@ -2,6 +2,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Widget } from '@fem/api-interfaces';
+import { Observable } from 'rxjs';
 
 const API_ENDPOIT = 'http://localhost:3000/';
 @Injectable({
@@ -12,7 +13,7 @@ export class WidgetsService {
 
   constructor(private http: HttpClient) {}
 
-  all() {
+  all(): Observable<Widget[]> {
     return this.http.get<Widget[]>(this.getUrl());
   }
 
