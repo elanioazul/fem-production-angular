@@ -23,7 +23,7 @@
             ],
             "styles": [
               "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
-              "apps/dashboard/src/styles.css"
+              "apps/dashboard/src/styles.scss"
             ],
             "scripts": []
           },
@@ -128,7 +128,11 @@
       "sourceRoot": "apps/api/src",
       "projectType": "application",
       "prefix": "api",
-      "schematics": {},
+      "schematics": {
+        "@schematics/angular:component": {
+          "styleext": "scss"       
+        } 
+      },
       "architect": {
         "build": {
           "builder": "@nrwl/node:build",
