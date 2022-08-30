@@ -5,7 +5,7 @@ import { Widget } from '@fem/api-interfaces';
 import { Observable } from 'rxjs';
 import { environment } from '@env/environment'
 
-const API_ENDPOIT = 'http://localhost:3000/';
+//const API_ENDPOIT = environment.apiEndpoint;
 @Injectable({
   providedIn: 'root',
 })
@@ -35,7 +35,7 @@ export class WidgetsService {
   }
 
   private getUrl() {
-    return `${API_ENDPOIT}${this.model}`;
+    return `${environment.apiEndpoint}${this.model}`;
   }
 
   private getUrlWithId(id) {
