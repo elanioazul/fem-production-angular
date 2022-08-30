@@ -1,9 +1,12 @@
+import { Widget } from '@fem/api-interfaces';
 import { Injectable } from '@nestjs/common';
 import { CreateWidgetDto } from './dto/create-widget.dto';
 import { UpdateWidgetDto } from './dto/update-widget.dto';
 
 @Injectable()
 export class WidgetsService {
+  widgets: Widget[] = [];
+
   create(createWidgetDto: CreateWidgetDto) {
     return 'This action adds a new widget';
   }
