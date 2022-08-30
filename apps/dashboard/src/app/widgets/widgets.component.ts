@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Widget } from '@fem/api-interfaces';
+import { WidgetsService } from '@fem/core-data';
 
 const mockWidgets: Widget[] = [
   { id: '1', title: 'Widget 01', description: 'Pending' },
@@ -22,6 +23,10 @@ export class WidgetsComponent implements OnInit {
   widgets: Widget[];
   selectedWidget: Widget;
 
+  constructor(private widgetService: WidgetsService) {
+
+  }
+
   ngOnInit(): void {
     this.reset();
   }
@@ -40,7 +45,7 @@ export class WidgetsComponent implements OnInit {
   }
 
   loadWidgets() {
-    this.widgets = mockWidgets;
+    this.widgetService.all().subscribe(widgets => this.widgets = widgets);
   }
 
   saveWidget(widget: Widget) {
