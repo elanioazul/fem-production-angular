@@ -5,14 +5,18 @@ import { UpdateWidgetDto } from './dto/update-widget.dto';
 
 @Injectable()
 export class WidgetsService {
-  widgets: Widget[] = [];
+  widgets: Widget[] = [
+    {id:'1', title: 'Nest WIdget FTW 01', description: 'Pending...'},
+    {id:'2', title: 'Nest WIdget FTW 02', description: 'Pending...'},
+    {id:'3', title: 'Nest WIdget FTW 03', description: 'Pending...'}
+  ];
 
   create(createWidgetDto: CreateWidgetDto) {
     return 'This action adds a new widget';
   }
 
   findAll() {
-    return `This action returns all widgets`;
+    return this.widgets;
   }
 
   findOne(id: number) {
