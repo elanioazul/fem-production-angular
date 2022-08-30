@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Widget } from '@fem/api-interfaces';
 import { Observable } from 'rxjs';
+import { environment } from '@env/environment'
 
 const API_ENDPOIT = 'http://localhost:3000/';
 @Injectable({
