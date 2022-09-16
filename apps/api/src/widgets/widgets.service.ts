@@ -1,7 +1,6 @@
 import { Widget } from '@fem/api-interfaces';
 import { Injectable } from '@nestjs/common';
-import { CreateWidgetDto } from './dto/create-widget.dto';
-import { UpdateWidgetDto } from './dto/update-widget.dto';
+import { v4 as uuidv4 } from 'uuid'
 
 @Injectable()
 export class WidgetsService {
@@ -11,23 +10,26 @@ export class WidgetsService {
     {id:'3', title: 'Nest WIdget FTW 03', description: 'Pending...'}
   ];
 
-  create(createWidgetDto: CreateWidgetDto) {
-    return 'This action adds a new widget';
+  create(widget: Widget) {
+    this.widgets = [...this.widgets, Object.assign({}, widget, {id: uuidv4()})];
+    return this.widgets;
   }
 
   findAll() {
     return this.widgets;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} widget`;
+  findOne(id: string) {
+    return this.widgets.find((widget) => widget.id === id);
   }
 
-  update(id: number, updateWidgetDto: UpdateWidgetDto) {
-    return `This action updates a #${id} widget`;
+  update(id: string, widgetToBeUpdated: Widget) {
+    this.widgets = this.widgets.map((w)=> (w.id === id ? widgetToBeUpdated : w))
+    return this.widgets;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} widget`;
+  remove(id: string) {
+    this.widgets = this.widgets.filter((w) => {w.id !== id});
+    return this.widgets;
   }
 }

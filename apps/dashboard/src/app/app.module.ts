@@ -13,7 +13,6 @@ import { WidgetDetailsComponent } from './widgets/widgets-details/widgets-detail
 import { WidgetsListComponent } from './widgets/widgets-list/widgets-list.component';
 import { WidgetsComponent } from './widgets/widgets.component';
 import { UiToolbarModule } from '@fem/ui-toolbar';
-import { WidgetsService } from '@fem/core-data';
 
 @NgModule({
   declarations: [
@@ -34,7 +33,7 @@ import { WidgetsService } from '@fem/core-data';
     RoutingModule,
     UiToolbarModule
   ],
-  providers: [WidgetsService],
+  providers: [],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
