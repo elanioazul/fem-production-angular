@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Widget } from '@fem/api-interfaces';
-import { WidgetsService } from '@fem/core-data';
+import { WidgetsFacade } from '@fem/core-state';
 import { Observable } from 'rxjs';
 
 const mockWidgets: Widget[] = [
@@ -25,7 +25,7 @@ export class WidgetsComponent implements OnInit {
   widgets$: Observable<Widget[]>;
   selectedWidget: Widget;
 
-  constructor(private widgetService: WidgetsService) {
+  constructor(private widgetsFacade: WidgetsFacade) {
 
   }
 
@@ -35,48 +35,32 @@ export class WidgetsComponent implements OnInit {
 
   reset() {
     this.loadWidgets();
-    this.selectWidget(null);
+    this.selectWidget(emptyWidget);
   }
 
   resetForm() {
-    this.selectedWidget = emptyWidget;
+    this.selectWidget(emptyWidget);
   }
 
   selectWidget(widget: Widget) {
-    this.selectedWidget = widget;
+    this.selectWidget(emptyWidget);
   }
 
   loadWidgets() {
     //this.widgetService.all().subscribe(widgets => this.widgets = widgets);
-    this.widgets$ = this.widgetService.all();
+    this.widgets$ = this.widgetsFacade.loadWidgets();
   }
 
   saveWidget(widget: Widget) {
-    if(widget.id) {
-      this.updateWidget(widget);
-    } else {
-      this.createWidget(widget)
-    }
-  }
-
-  createWidget(widget: Widget) {
-    //const newWidget = Object.assign({}, widget, { id: this.getRandomID()})
-    //this.widgets = [...this.widgets, newWidget];
-    this.widgetService.create(widget).subscribe(res => this.reset());
-    //this.resetForm();
-  }
-
-  updateWidget(widget: Widget) {
-    // this.widgets = this.widgets.map(w => {
-    //   return (widget.id === w.id) ? widget : w;
-    // });
-    this.widgetService.update(widget).subscribe(res => this.reset());
+    const result$ = this.widgetsFacade.saveWidget(widget);
+    result$.subscribe((result) => this.reset());
     //this.resetForm();
   }
 
   deleteWidget(widget: Widget) {
     //this.widgets = this.widgets.filter(w => widget.id !== w.id);
-    this.widgetService.delete(widget).subscribe(res => this.reset());
+    const result$ = this.widgetsFacade.deleteWidget(widget)
+    result$.subscribe((result) => this.reset());
     //this.resetForm();
   }
 }

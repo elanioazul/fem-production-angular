@@ -1,19 +1,34 @@
 import { Injectable } from '@angular/core';
+import { Widget } from '@fem/api-interfaces';
+import { WidgetsService } from '@fem/core-data';
 
-import { select, Store, Action } from '@ngrx/store';
-
-import * as fromWidgets from './widgets.reducer';
-import * as WidgetsSelectors from './widgets.selectors';
-
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class WidgetsFacade {
-  loaded$ = this.store.pipe(select(WidgetsSelectors.getWidgetsLoaded));
-  allWidgets$ = this.store.pipe(select(WidgetsSelectors.getAllWidgets));
-  selectedWidgets$ = this.store.pipe(select(WidgetsSelectors.getSelected));
+  constructor(private widgetsService: WidgetsService) {}
 
-  constructor(private store: Store<fromWidgets.WidgetsPartialState>) {}
+  loadWidgets() {
+    return this.widgetsService.all();
+  }
 
-  dispatch(action: Action) {
-    this.store.dispatch(action);
+  saveWidget(widget: Widget) {
+    if (widget.id) {
+      return this.updateWidget(widget);
+    } else {
+      return this.createWidget(widget);
+    }
+  }
+
+  createWidget(widget: Widget) {
+    return this.widgetsService.create(widget);
+  }
+
+  updateWidget(widget: Widget) {
+    return this.widgetsService.update(widget);
+  }
+
+  deleteWidget(widget: Widget) {
+    return this.widgetsService.delete(widget);
   }
 }
