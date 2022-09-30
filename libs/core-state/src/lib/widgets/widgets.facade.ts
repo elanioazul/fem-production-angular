@@ -17,6 +17,10 @@ export class WidgetsFacade {
 
   constructor(private widgetsService: WidgetsService) {}
 
+  reset() {
+    this.mutations.next(true);
+  }
+
   selectWidget(widget: Widget) {
     this.selectedWidget.next(widget);
   }
@@ -36,14 +40,17 @@ export class WidgetsFacade {
   }
 
   createWidget(widget: Widget) {
-    return this.widgetsService.create(widget);
+    //return this.widgetsService.create(widget);
+    this.widgetsService.create(widget).subscribe((_) => this.reset());
   }
 
   updateWidget(widget: Widget) {
-    return this.widgetsService.update(widget);
+    //return this.widgetsService.update(widget);
+    this.widgetsService.update(widget).subscribe((_) => this.reset());
   }
 
   deleteWidget(widget: Widget) {
-    return this.widgetsService.delete(widget);
+    //return this.widgetsService.delete(widget);
+    this.widgetsService.delete(widget).subscribe((_) => this.reset());
   }
 }

@@ -31,15 +31,16 @@ export class WidgetsComponent implements OnInit {
 
   ngOnInit(): void {
     this.reset();
+    this.widgetsFacade.mutations$.subscribe((_) => this.reset())
   }
 
   reset() {
     this.loadWidgets();
-    this.selectWidget(emptyWidget);
+    this.selectWidget(null);
   }
 
   resetForm() {
-    this.selectWidget(emptyWidget);
+    this.selectWidget(null);
   }
 
   selectWidget(widget: Widget) {
@@ -52,15 +53,17 @@ export class WidgetsComponent implements OnInit {
   }
 
   saveWidget(widget: Widget) {
-    const result$ = this.widgetsFacade.saveWidget(widget);
-    result$.subscribe((result) => this.reset());
+    // const result$ = this.widgetsFacade.saveWidget(widget);
+    // result$.subscribe((result) => this.reset());
     //this.resetForm();
+    this.widgetsFacade.saveWidget(widget);
   }
 
   deleteWidget(widget: Widget) {
     //this.widgets = this.widgets.filter(w => widget.id !== w.id);
-    const result$ = this.widgetsFacade.deleteWidget(widget)
-    result$.subscribe((result) => this.reset());
+    // const result$ = this.widgetsFacade.deleteWidget(widget)
+    // result$.subscribe((result) => this.reset());
     //this.resetForm();
+    this.widgetsFacade.deleteWidget(widget);
   }
 }
