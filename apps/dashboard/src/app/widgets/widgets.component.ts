@@ -22,8 +22,8 @@ const emptyWidget: Widget = {
 })
 export class WidgetsComponent implements OnInit {
   //widgets: Widget[];
-  widgets$: Observable<Widget[]>;
-  selectedWidget: Widget;
+  widgets$: Observable<Widget[]> = this.widgetsFacade.allWidgets$;
+  selectedWidget$: Observable<Widget> = this.widgetsFacade.selectedWidget$;
 
   constructor(private widgetsFacade: WidgetsFacade) {
 
@@ -43,12 +43,12 @@ export class WidgetsComponent implements OnInit {
   }
 
   selectWidget(widget: Widget) {
-    this.selectWidget(emptyWidget);
+    this.widgetsFacade.selectWidget(widget);
   }
 
   loadWidgets() {
     //this.widgetService.all().subscribe(widgets => this.widgets = widgets);
-    this.widgets$ = this.widgetsFacade.loadWidgets();
+    this.widgetsFacade.loadWidgets();
   }
 
   saveWidget(widget: Widget) {
